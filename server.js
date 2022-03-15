@@ -89,12 +89,64 @@ function isDepartments() {
 // /////////////////////////////////////////////////////////////
 // function for viewing all employees
 // /////////////////////////////////////////////////////////////
-function isEmployees() {}
+function isEmployees() {
+    const call = "SELECT * FROM employees";
+    database.query(call, function (error, res) {
+      if (error) throw error;
+      console.log("Here are all of the employees!");
+      console.table(res);
+      inquirer
+        .prompt([
+          {
+            type: "list",
+            name: "choice",
+            message: "Would you like to exit or go back to the starting page?",
+            choices: ["Start", "Exit"],
+          },
+        ])
+        .then((inquirerAnswers) => {
+          switch (inquirerAnswers.choice) {
+            case "Start":
+              startApp();
+              break;
+            case "Exit":
+              exit();
+              break;
+          }
+        });
+    });
+}
 
 // /////////////////////////////////////////////////////////////
 // function for viewing all roles
 // /////////////////////////////////////////////////////////////
-function isRoles() {}
+function isRoles() {
+    const call = "SELECT * FROM roles";
+    database.query(call, function (error, res) {
+      if (error) throw error;
+      console.log("Here are all of the Roles!");
+      console.table(res);
+      inquirer
+        .prompt([
+          {
+            type: "list",
+            name: "choice",
+            message: "Would you like to exit or go back to the starting page?",
+            choices: ["Start", "Exit"],
+          },
+        ])
+        .then((inquirerAnswers) => {
+          switch (inquirerAnswers.choice) {
+            case "Start":
+              startApp();
+              break;
+            case "Exit":
+              exit();
+              break;
+          }
+        });
+    });
+}
 
 // /////////////////////////////////////////////////////////////
 // function for adding department
