@@ -29,6 +29,27 @@ function startApp() {
     ])
     .then((inquirerAnswers) => {
       switch (inquirerAnswers.choice) {
+        case "View Departments":
+          isDepartments();
+          break;
+        case "View Employees":
+          isEmployees();
+          break;
+        case "View Roles":
+          isRoles();
+          break;
+        case "Add Department":
+          addDepartment();
+          break;
+        case "Add Employee":
+          addEmployee();
+          break;
+        case "Add Role":
+          addRole();
+          break;
+        case "Exit":
+          exit();
+          break;
       }
     });
 }
@@ -62,3 +83,8 @@ function addEmployee() {}
 // function for adding role
 // /////////////////////////////////////////////////////////////
 function addRole() {}
+
+// /////////////////////////////////////////////////////////////
+// function for exiting app
+// /////////////////////////////////////////////////////////////
+function exit() {}
