@@ -206,12 +206,12 @@ function addEmployee() {
     .prompt([
       {
         type: "input",
-        name: "AddEmployee",
+        name: "AddEmployeeName",
         message: "Enter the employees name.",
       },
       {
         type: "input",
-        name: "AddEmployee",
+        name: "AddEmployeeLastName",
         message: "Enter the employees last name.",
       },
       {
