@@ -5,9 +5,9 @@ const mysql = require("mysql");
 const database = require("./db/joined");
 const { joined } = require("./db");
 
-database.connect(async function () {
-  startApp();
-});
+// database.connect(async function () {
+//   startApp();
+// });
 
 function startApp() {
   inquirer
@@ -156,12 +156,12 @@ function addDepartment() {
     .prompt([
       {
         type: "input",
-        name: "addDepartment",
+        name: "AddDepartment",
         message: "Enter the department name you would like to add.",
       },
       {
         type: "input",
-        name: "addDepartmentID",
+        name: "AddDepartmentID",
         message: "Enter the departments ID number",
       },
     ])
@@ -201,14 +201,128 @@ function addDepartment() {
 // /////////////////////////////////////////////////////////////
 // function for adding employees
 // /////////////////////////////////////////////////////////////
-function addEmployee() {}
+function addEmployee() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "AddEmployee",
+        message: "Enter the employees name.",
+      },
+      {
+        type: "input",
+        name: "AddEmployee",
+        message: "Enter the employees last name.",
+      },
+      {
+        type: "input",
+        name: "AddEmployeeRole",
+        message: "Enter the employees role.",
+      },
+      {
+        type: "input",
+        name: "AddEmployeeID",
+        message: "Enter the employees ID number",
+      },
+    ])
+    .then(function (userInput) {
+      joined.query(
+        "INSERT INTO employees(employee_name, employee_lastname, employee_role, employee_ID) VALUES(?,?,?,?)",
+        [
+          userInput.AddEmployeeName,
+          userInput.AddEmployeeLastName,
+          userInput.AddEmployeeRole,
+          userInput.AddEmployeeID,
+        ],
+        function (error, userInput) {
+          console.log(error);
+          if (error) throw error;
+          console.table(userInput);
+          inquirer
+            .prompt([
+              {
+                type: "list",
+                name: "choice",
+                message:
+                  "Would you like to exit or go back to the starting page?",
+                choices: ["Start", "Exit"],
+              },
+            ])
+            .then((inquirerAnswers) => {
+              switch (inquirerAnswers.choice) {
+                case "Start":
+                  startApp();
+                  break;
+                case "Exit":
+                  exit();
+                  break;
+              }
+            });
+        }
+      );
+    });
+}
 
 // /////////////////////////////////////////////////////////////
 // function for adding role
 // /////////////////////////////////////////////////////////////
-function addRole() {}
+function addRole() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "AddRoleTitle",
+        message: "Enter the new roles title.",
+      },
+      {
+        type: "input",
+        name: "AddRoleID",
+        message: "Enter the Roles ID number.",
+      },
+      {
+        type: "input",
+        name: "AddRoleIncome",
+        message: "Enter the Roles annual income.",
+      },
+    ])
+    .then(function (userInput) {
+      joined.query(
+        "INSERT INTO roles(role_title, role_ID, role_income) VALUES(?,?,?)",
+        [userInput.AddRoleTitle, userInput.AddRoleID, userInput.AddRoleIncome],
+        function (error, userInput) {
+          console.log(error);
+          if (error) throw error;
+          console.table(userInput);
+          inquirer
+            .prompt([
+              {
+                type: "list",
+                name: "choice",
+                message:
+                  "Would you like to exit or go back to the starting page?",
+                choices: ["Start", "Exit"],
+              },
+            ])
+            .then((inquirerAnswers) => {
+              switch (inquirerAnswers.choice) {
+                case "Start":
+                  startApp();
+                  break;
+                case "Exit":
+                  exit();
+                  break;
+              }
+            });
+        }
+      );
+    });
+}
 
 // /////////////////////////////////////////////////////////////
 // function for exiting app
 // /////////////////////////////////////////////////////////////
-function exit() {}
+function exit() {
+  console.log("Exiting app, Have a good rest of your day!");
+  process.exit();
+}
+startApp();
