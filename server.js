@@ -90,68 +90,113 @@ function isDepartments() {
 // function for viewing all employees
 // /////////////////////////////////////////////////////////////
 function isEmployees() {
-    const call = "SELECT * FROM employees";
-    database.query(call, function (error, res) {
-      if (error) throw error;
-      console.log("Here are all of the employees!");
-      console.table(res);
-      inquirer
-        .prompt([
-          {
-            type: "list",
-            name: "choice",
-            message: "Would you like to exit or go back to the starting page?",
-            choices: ["Start", "Exit"],
-          },
-        ])
-        .then((inquirerAnswers) => {
-          switch (inquirerAnswers.choice) {
-            case "Start":
-              startApp();
-              break;
-            case "Exit":
-              exit();
-              break;
-          }
-        });
-    });
+  const call = "SELECT * FROM employees";
+  database.query(call, function (error, res) {
+    if (error) throw error;
+    console.log("Here are all of the employees!");
+    console.table(res);
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          name: "choice",
+          message: "Would you like to exit or go back to the starting page?",
+          choices: ["Start", "Exit"],
+        },
+      ])
+      .then((inquirerAnswers) => {
+        switch (inquirerAnswers.choice) {
+          case "Start":
+            startApp();
+            break;
+          case "Exit":
+            exit();
+            break;
+        }
+      });
+  });
 }
 
 // /////////////////////////////////////////////////////////////
 // function for viewing all roles
 // /////////////////////////////////////////////////////////////
 function isRoles() {
-    const call = "SELECT * FROM roles";
-    database.query(call, function (error, res) {
-      if (error) throw error;
-      console.log("Here are all of the Roles!");
-      console.table(res);
-      inquirer
-        .prompt([
-          {
-            type: "list",
-            name: "choice",
-            message: "Would you like to exit or go back to the starting page?",
-            choices: ["Start", "Exit"],
-          },
-        ])
-        .then((inquirerAnswers) => {
-          switch (inquirerAnswers.choice) {
-            case "Start":
-              startApp();
-              break;
-            case "Exit":
-              exit();
-              break;
-          }
-        });
-    });
+  const call = "SELECT * FROM roles";
+  database.query(call, function (error, res) {
+    if (error) throw error;
+    console.log("Here are all of the Roles!");
+    console.table(res);
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          name: "choice",
+          message: "Would you like to exit or go back to the starting page?",
+          choices: ["Start", "Exit"],
+        },
+      ])
+      .then((inquirerAnswers) => {
+        switch (inquirerAnswers.choice) {
+          case "Start":
+            startApp();
+            break;
+          case "Exit":
+            exit();
+            break;
+        }
+      });
+  });
 }
 
 // /////////////////////////////////////////////////////////////
 // function for adding department
 // /////////////////////////////////////////////////////////////
-function addDepartment() {}
+function addDepartment() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "addDepartment",
+        message: "Enter the department name you would like to add.",
+      },
+      {
+        type: "input",
+        name: "addDepartmentID",
+        message: "Enter the departments ID number",
+      },
+    ])
+    .then(function (userInput) {
+      joined.query(
+        "INSERT INTO department(department_name, department_ID) VALUES(?,?)",
+        [userInput.AddDepartment, userInput.AddDepartmentID],
+        function (error, userInput) {
+          console.log(error);
+          if (error) throw error;
+          console.table(userInput);
+          inquirer
+            .prompt([
+              {
+                type: "list",
+                name: "choice",
+                message:
+                  "Would you like to exit or go back to the starting page?",
+                choices: ["Start", "Exit"],
+              },
+            ])
+            .then((inquirerAnswers) => {
+              switch (inquirerAnswers.choice) {
+                case "Start":
+                  startApp();
+                  break;
+                case "Exit":
+                  exit();
+                  break;
+              }
+            });
+        }
+      );
+    });
+}
 
 // /////////////////////////////////////////////////////////////
 // function for adding employees
