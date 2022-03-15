@@ -64,16 +64,25 @@ function isDepartments() {
     if (error) throw error;
     console.log("Here are all of the department!");
     console.table(res);
-    inquirer.prompt([
-      {
-        type: "list",
-        name: "choice",
-        message: "Would you like to exit or go back to the starting page?",
-        choices: ["Start", "Exit"],
-      },
-    ]).then((inquirerAnswers) => {
-        
-    })
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          name: "choice",
+          message: "Would you like to exit or go back to the starting page?",
+          choices: ["Start", "Exit"],
+        },
+      ])
+      .then((inquirerAnswers) => {
+        switch (inquirerAnswers.choice) {
+          case "Start":
+            startApp();
+            break;
+          case "Exit":
+            exit();
+            break;
+        }
+      });
   });
 }
 
