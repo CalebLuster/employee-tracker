@@ -27,6 +27,7 @@ function startApp() {
         ],
       },
     ])
+    // runs the corresponding function to the users selected choice
     .then((inquirerAnswers) => {
       switch (inquirerAnswers.choice) {
         case "View Departments":
@@ -57,7 +58,24 @@ function startApp() {
 // /////////////////////////////////////////////////////////////
 // function for viewing all departments.
 // /////////////////////////////////////////////////////////////
-function isDepartments() {}
+function isDepartments() {
+  const call = "SELECT * FROM department";
+  database.query(call, function (error, res) {
+    if (error) throw error;
+    console.log("Here are all of the department!");
+    console.table(res);
+    inquirer.prompt([
+      {
+        type: "list",
+        name: "choice",
+        message: "Would you like to exit or go back to the starting page?",
+        choices: ["Start", "Exit"],
+      },
+    ]).then((inquirerAnswers) => {
+        
+    })
+  });
+}
 
 // /////////////////////////////////////////////////////////////
 // function for viewing all employees
