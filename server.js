@@ -5,9 +5,9 @@ const mysql = require("mysql");
 const database = require("./db/joined");
 const { joined } = require("./db");
 
-// database.connect(async function () {
-//   startApp();
-// });
+database.connect(async function () {
+  startApp();
+});
 
 function startApp() {
   inquirer
@@ -325,4 +325,3 @@ function exit() {
   console.log("Exiting app, Have a good rest of your day!");
   process.exit();
 }
-startApp();
