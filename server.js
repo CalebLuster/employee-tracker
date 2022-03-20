@@ -1,11 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const inquirer = require("inquirer");
-const mysql = require("mysql");
 const database = require("./db/connection");
 const { connection } = require("./db");
+// const { connection } = require("./db");
 
-database.connect(async function () {
+// database.connect(async function () {
+//   console.log()
+//   startApp();
+// });
+
+database.connect(function (error) {
+  console.log("creating connection...");
+  if (error) {
+    console.error(error);
+  }
   startApp();
 });
 
@@ -167,7 +176,7 @@ function addDepartment() {
     ])
     .then(function (userInput) {
       connection.query(
-        "INSERT INTO department(department_name, department_ID) VALUES(?,?)",
+        "INSERT INTO department(department_name, roles_id) VALUES(?,?)",
         [userInput.AddDepartment, userInput.AddDepartmentID],
         function (error, userInput) {
           console.log(error);
@@ -216,23 +225,23 @@ function addEmployee() {
       },
       {
         type: "input",
-        name: "AddEmployeeRole",
-        message: "Enter the employees role.",
+        name: "managerID",
+        message: "Enter the manager ID number.",
       },
       {
         type: "input",
-        name: "AddEmployeeID",
+        name: "employeeID",
         message: "Enter the employees ID number",
       },
     ])
     .then(function (userInput) {
       connection.query(
-        "INSERT INTO employees(employee_name, employee_lastname, employee_role, employee_ID) VALUES(?,?,?,?)",
+        "INSERT INTO employees(employee_name, employee_lastname, roles_id, manager_id) VALUES(?,?,?,?)",
         [
           userInput.AddEmployeeName,
           userInput.AddEmployeeLastName,
-          userInput.AddEmployeeRole,
-          userInput.AddEmployeeID,
+          userInput.managerID,
+          userInput.employeeID,
         ],
         function (error, userInput) {
           console.log(error);
@@ -277,17 +286,17 @@ function addRole() {
       {
         type: "input",
         name: "AddRoleID",
-        message: "Enter the Roles ID number.",
+        message: "Enter the Roles annual income.",
       },
       {
         type: "input",
         name: "AddRoleIncome",
-        message: "Enter the Roles annual income.",
+        message: "Enter the Roles ID number.",
       },
     ])
     .then(function (userInput) {
       connection.query(
-        "INSERT INTO roles(role_title, role_ID, role_income) VALUES(?,?,?)",
+        "INSERT INTO roles(title, salary, department_id) VALUES(?,?,?)",
         [userInput.AddRoleTitle, userInput.AddRoleID, userInput.AddRoleIncome],
         function (error, userInput) {
           console.log(error);
