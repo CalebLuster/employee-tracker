@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const inquirer = require("inquirer");
 const mysql = require("mysql");
-const database = require("./db/joined");
-const { joined } = require("./db");
+const database = require("./db/connection");
+const { connection } = require("./db");
 
 database.connect(async function () {
   startApp();
@@ -166,7 +166,7 @@ function addDepartment() {
       },
     ])
     .then(function (userInput) {
-      joined.query(
+      connection.query(
         "INSERT INTO department(department_name, department_ID) VALUES(?,?)",
         [userInput.AddDepartment, userInput.AddDepartmentID],
         function (error, userInput) {
@@ -226,7 +226,7 @@ function addEmployee() {
       },
     ])
     .then(function (userInput) {
-      joined.query(
+      connection.query(
         "INSERT INTO employees(employee_name, employee_lastname, employee_role, employee_ID) VALUES(?,?,?,?)",
         [
           userInput.AddEmployeeName,
@@ -286,7 +286,7 @@ function addRole() {
       },
     ])
     .then(function (userInput) {
-      joined.query(
+      connection.query(
         "INSERT INTO roles(role_title, role_ID, role_income) VALUES(?,?,?)",
         [userInput.AddRoleTitle, userInput.AddRoleID, userInput.AddRoleIncome],
         function (error, userInput) {

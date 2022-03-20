@@ -1,12 +1,12 @@
-const joined = require("./joined");
+const connection = require("./connection");
 
 class DataBase {
-  constructor(joined) {
-    this.joined = joined;
+  constructor(connection) {
+    this.connection = connection;
   }
   findEmployees() {
-    return this.joined.query("SELECT * FROM employee.employees");
+    return this.connection.query("SELECT * FROM employee.employees");
   }
 }
 
-module.exports = new DataBase(joined);
+module.exports = new DataBase(connection);
